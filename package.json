@@ -1,0 +1,34 @@
+{
+    "name": "@ifty64bit/utils",
+    "version": "0.1.0",
+    "description": "My daily reusable utilities",
+    "license": "MIT",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "sideEffects": false,
+    "packageManager": "bun@1.1.32",
+    "scripts": {
+        "clean": "bunx rimraf dist",
+        "build": "bunx rimraf dist && bunx tsc --project tsconfig.json",
+        "check": "bunx tsc --noEmit"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "rimraf": "^6.1.2",
+        "typescript": "^5"
+    }
+}
