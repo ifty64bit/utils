@@ -1,6 +1,6 @@
 {
     "name": "@ifty64bit/utils",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "My daily reusable utilities",
     "license": "MIT",
     "type": "module",

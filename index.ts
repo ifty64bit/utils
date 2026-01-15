@@ -1,9 +1,38 @@
 export type TryCatchResult<T> =
     | { result: T; error: null }
     | { result: null; error: Error };
-export function tryCatch<T>(fn: () => T): TryCatchResult<T> {
+
+// Overload for synchronous functions
+export function tryCatch<T>(fn: () => T): TryCatchResult<T>;
+// Overload for asynchronous functions
+export function tryCatch<T>(fn: () => Promise<T>): Promise<TryCatchResult<T>>;
+// Implementation
+export function tryCatch<T>(
+    fn: () => T | Promise<T>
+): TryCatchResult<T> | Promise<TryCatchResult<T>> {
     try {
-        return { result: fn(), error: null };
+        const result = fn();
+
+        // Check if result is a Promise
+        if (result instanceof Promise) {
+            return result
+                .then(
+                    (value) =>
+                        ({ result: value, error: null } as TryCatchResult<T>)
+                )
+                .catch((error) => {
+                    const normalizedError =
+                        error instanceof Error
+                            ? error
+                            : new Error(String(error));
+                    return {
+                        result: null,
+                        error: normalizedError,
+                    } as TryCatchResult<T>;
+                });
+        }
+
+        return { result, error: null };
     } catch (error) {
         const normalizedError =
             error instanceof Error ? error : new Error(String(error));
